@@ -3,36 +3,40 @@ package main
 import "fmt"
 
 func main() {
-	var a int = 10 // простое присвоение
-	b := 5
+	var numbers [5]int = [5]int{1, 2, 3, 4, 5}
+	fmt.Println(numbers)
+	var numbers2 [5]int = [5]int{1, 2}
+	fmt.Println(numbers2) // [1 2 0 0 0]
+	// numbers := [5]int{1,2,3,4,5} Краткая форма объявления массива
+	var numbers3 = [...]int{1, 2, 3, 4, 5} // длина массива 5
+	numbers4 := [...]int{1, 2, 3}          // длина массива 3
+	numbers4[2] = 100                      // изменение значения элемента
+	fmt.Println(numbers3)                  // [1 2 3 4 5]
+	fmt.Println(numbers4)                  // [1 2 3]
+	numbers5 := [3][2]int{
+		{1, 2},
+		{4, 5},
+		{7, 8},
+	}
+	numbers5[0] = [2]int{5, 5}
+	numbers5[1] = [2]int{6, 6}
+	numbers5[2] = [2]int{7, 78}
+	numbers5[0][0] = 1
+	numbers5[0][1] = 2
 
-	a += b
-	fmt.Println("a += b:", a) // a += b: 15
+	numbers5[1][0] = 4
+	numbers5[1][1] = 5
+	numbers5[2][0] = 7
+	numbers5[2][1] = 8
+	fmt.Println(numbers5)
 
-	a -= b
-	fmt.Println("a -= b:", a) // a -= b: 10
+	nums1 := [4]int{3, 4, 5, 6}
+	nums2 := nums1 // копирование массива nums1 в nums2
 
-	a *= 10
-	fmt.Println("a *= 10:", a) // a *= 10: 100
+	nums2[1] = 11 // меняем значение в nums2, nums1 не меняется
 
-	a /= b
-	fmt.Println("a /= b:", a) // a /= b: 20
+	fmt.Println("nums1:", nums1) // nums1: [3 4 5 6]
 
-	a %= 15
-	fmt.Println("a %= 15:", a) // a %= 15: 5
+	fmt.Println("nums2:", nums2) // nums2: [3 11 5 6]
 
-	a <<= 2
-	fmt.Println("a <<= 2:", a) // a <<= 2: 20
-
-	a >>= 1                    // 10100 >>= 1 = 1010
-	fmt.Println("a >>= 1:", a) // a >>= 1: 10
-
-	a &= 8                    // 10100 &=1 = 1000
-	fmt.Println("a &= 8:", a) // a &= 8: 8
-
-	a ^= 10                    // 1000 ^= 1010 = 0010
-	fmt.Println("a ^= 10:", a) // a ^= 10: 2
-
-	a |= 5                    // 010 |= 101 = 111
-	fmt.Println("a |= 5:", a) // a |= 5: 7
 }
