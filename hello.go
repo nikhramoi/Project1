@@ -3,37 +3,48 @@ package main
 import "fmt"
 
 func main() {
-	/* func имя_функции (список_параметров) тип_возвращаемого_значения {
-	    выполняемые_операторы
-	    return возвращаемое_значение
-		} */
-	var a = add(4, 5)  // 9
-	var b = add(20, 6) // 26
-	fmt.Println(a)
-	fmt.Println(b)
-	var age, name = add3(4, 5, "Tom", "Simpson")
-	fmt.Println(age)  // 9
-	fmt.Println(name) // Tom Simpson
+	var f func(int, int) int = add //Присваиваем f функцию add()
+	fmt.Println(f(3, 4))
+	var x = f(4, 5) // 9
+	fmt.Println(x)
+
+	f2 := add2            //или так var f func(int, int) int = add
+	fmt.Println(f2(3, 4)) // 7
+
+	f = multiply         // теперь переменная f указывает на функцию multiply
+	fmt.Println(f(3, 4)) // 12
+
+	// f = display      // ошибка, так как функция display имеет тип func(string)
+
+	var f1 func(string) = display // норм
+	f1("hello")
+
+	action(10, 25, add3)    // 35
+	action(5, 6, multiply3) // 30
 }
 
-func add(x, y int) int {
+func add(x int, y int) int {
 	return x + y
 }
 
-// Именованные возвращаемые результаты
-func add2(x, y int) (z int) {
-	z = x + y
-	return
+func add2(x int, y int) int     { return x + y }
+func multiply(x int, y int) int { return x * y }
+
+func display(message string) {
+	fmt.Println(message)
 }
 
-func add3(x, y int, firstName, lastName string) (int, string) {
-	var z int = x + y
-	var fullName = firstName + " " + lastName
-	return z, fullName
-}
+//Функции как параметры других функций
+func add3(x int, y int) int {
 
-/* func add4(x, y int, firstName, lastName string) (z int, fullName string) {
-    z = x + y
-    fullName = firstName + " " + lastName
-    return
-} */
+	return x + y
+}
+func multiply3(x int, y int) int {
+
+	return x * y
+}
+func action(n1 int, n2 int, operation func(int, int) int) {
+
+	result := operation(n1, n2)
+	fmt.Println(result)
+}
