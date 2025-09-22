@@ -3,33 +3,44 @@ package main
 import "fmt"
 
 func main() {
-	f := func(x, y int) int { return x + y }
-	fmt.Println(f(3, 4)) // 7
-	fmt.Println(f(6, 7)) // 13
-	//Анонимная функция как аргумент функции
-	action(10, 25, func(x int, y int) int { return x + y }) // 35
-	action(5, 6, func(x int, y int) int { return x * y })   // 30
-	//Анонимная функция как результат функции
-	f2 := selectFn(1)
-	fmt.Println(f2(2, 3)) // 5
-	fmt.Println(f2(4, 5)) // 9
-	fmt.Println(f2(7, 6)) // 13
+	fn := outer() // fn = inner, так как функция outer возвращает функцию inner
+	// вызываем внутреннюю функцию inner
+	fn() // 6
+	fn() // 7
+	fn() // 8
+	//Пример 2
+	fn2 := multiply(5)
+	result1 := fn2(6)    // 30
+	fmt.Println(result1) // 30
 
+	result2 := fn2(5)    // 25
+	fmt.Println(result2) // 25
+
+	result3 := multiply(7)(6) // 42
+	fmt.Println(result3)      // 42
 }
 
-//Анонимная функция как аргумент функции
-func action(n1 int, n2 int, operation func(int, int) int) {
-	result := operation(n1, n2)
-	fmt.Println(result)
-}
-
-//Анонимная функция как результат функции
-func selectFn(n int) func(int, int) int {
-	if n == 1 {
-		return func(x int, y int) int { return x + y }
-	} else if n == 2 {
-		return func(x int, y int) int { return x - y }
-	} else {
-		return func(x int, y int) int { return x * y }
+func outer() func() { // внешняя функция
+	var n int = 5     // некоторая переменная - лексическое окружение функции inner
+	inner := func() { // вложенная функция
+		// действия с переменной n
+		n += 1
+		fmt.Println(n)
 	}
+	return inner
+}
+
+/* Пример с анонимной функцией
+    Function outer(){
+    var n = 5;
+    return (){
+        n++;
+        print(n);
+    };
+} */
+
+//Пример 2
+func multiply(n int) func(int) int {
+
+	return func(m int) int { return n * m }
 }
