@@ -3,51 +3,33 @@ package main
 import "fmt"
 
 func main() {
-	slice := []int{-2, 4, 3, -1, 7, -4, 23}
-
-	sumOfEvens := sum(slice, isEven) // сумма четных чисел
-	fmt.Println(sumOfEvens)          // -2
-
-	sumOfPositives := sum(slice, isPositive) // сумма положительных чисел
-	fmt.Println(sumOfPositives)              // 37
-	//Пример 2
-	f := selectFn(1)
+	f := func(x, y int) int { return x + y }
 	fmt.Println(f(3, 4)) // 7
-
-	f = selectFn(3)
-	fmt.Println(f(3, 4)) // 12
+	fmt.Println(f(6, 7)) // 13
+	//Анонимная функция как аргумент функции
+	action(10, 25, func(x int, y int) int { return x + y }) // 35
+	action(5, 6, func(x int, y int) int { return x * y })   // 30
+	//Анонимная функция как результат функции
+	f2 := selectFn(1)
+	fmt.Println(f2(2, 3)) // 5
+	fmt.Println(f2(4, 5)) // 9
+	fmt.Println(f2(7, 6)) // 13
 
 }
 
-func isEven(n int) bool {
-	return n%2 == 0
-}
-func isPositive(n int) bool {
-	return n > 0
-}
-
-func sum(numbers []int, criteria func(int) bool) int {
-
-	result := 0
-	for _, val := range numbers {
-		if criteria(val) {
-			result += val
-		}
-	}
-	return result
+//Анонимная функция как аргумент функции
+func action(n1 int, n2 int, operation func(int, int) int) {
+	result := operation(n1, n2)
+	fmt.Println(result)
 }
 
-// Пример возврата функции как результата выполнения другой функции
-func add(x int, y int) int      { return x + y }
-func subtract(x int, y int) int { return x - y }
-func multiply(x int, y int) int { return x * y }
-
+//Анонимная функция как результат функции
 func selectFn(n int) func(int, int) int {
 	if n == 1 {
-		return add
+		return func(x int, y int) int { return x + y }
 	} else if n == 2 {
-		return subtract
+		return func(x int, y int) int { return x - y }
 	} else {
-		return multiply
+		return func(x int, y int) int { return x * y }
 	}
 }
