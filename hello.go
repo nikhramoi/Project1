@@ -3,44 +3,48 @@ package main
 import "fmt"
 
 func main() {
-	fn := outer() // fn = inner, так как функция outer возвращает функцию inner
-	// вызываем внутреннюю функцию inner
-	fn() // 6
-	fn() // 7
-	fn() // 8
-	//Пример 2
-	fn2 := multiply(5)
-	result1 := fn2(6)    // 30
-	fmt.Println(result1) // 30
+	fmt.Println(sum(4)) // 10
+	//fmt.Println(sum(5))   // 15
+	//fmt.Println(sum(6))   // 21
+	//fmt.Println(sum(100)) // 5050
 
-	result2 := fn2(5)    // 25
-	fmt.Println(result2) // 25
+	//Факториал числа
+	fmt.Println(factorial(4)) // 24
+	fmt.Println(factorial(5)) // 120
+	fmt.Println(factorial(6)) // 720
 
-	result3 := multiply(7)(6) // 42
-	fmt.Println(result3)      // 42
+	// Фибоначчи
+	fmt.Println(fibbonachi(4)) // 3
+	fmt.Println(fibbonachi(5)) // 5
+	fmt.Println(fibbonachi(6)) // 8
 }
 
-func outer() func() { // внешняя функция
-	var n int = 5     // некоторая переменная - лексическое окружение функции inner
-	inner := func() { // вложенная функция
-		// действия с переменной n
-		n += 1
-		fmt.Println(n)
+func sum(n uint) uint {
+
+	if n == 1 {
+		return n
 	}
-	return inner
+	fmt.Println(n)
+	return n + sum(n-1)
 }
 
-/* Пример с анонимной функцией
-    Function outer(){
-    var n = 5;
-    return (){
-        n++;
-        print(n);
-    };
-} */
+//Факториал числа
+func factorial(n uint) uint {
 
-//Пример 2
-func multiply(n int) func(int) int {
+	if n == 0 {
+		return 1
+	}
+	return n * factorial(n-1)
+}
 
-	return func(m int) int { return n * m }
+//Фибоначчи
+func fibbonachi(n uint) uint {
+
+	if n == 0 {
+		return 0
+	}
+	if n == 1 {
+		return 1
+	}
+	return fibbonachi(n-1) + fibbonachi(n-2)
 }
