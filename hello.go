@@ -1,17 +1,21 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+)
 
 func main() {
-	m := map[string]int{
-		"hello": 5,
-		"world": 0,
-	}
-	var ebok bool
-	v, ok := m["hello"]
-	fmt.Println(v, ok)
-	v, ok = m["world"]
-	fmt.Println(v, ok)
-	v, ebok = m["goodbye"]
-	fmt.Println(v, ebok)
+	x := 10
+	var p *int = &x
+	fmt.Println("X=", x, "P=", p)
+	*p++
+	fmt.Println("X=", x, "P=", *p)
+
+	ukaz := new(int)
+	*ukaz = 100
+	ukaz2 := new(int)
+	ukaz2 = &x
+	fmt.Println(*ukaz, ukaz, ukaz2, *ukaz2)
 }
+
+// Golang для профи с 39
