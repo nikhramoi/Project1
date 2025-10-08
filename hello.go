@@ -5,21 +5,57 @@ import (
 	"fmt"
 	"log"
 	_ "math"
+	"strings"
 )
 
-func main() {
-	result, err := devide(10, 0)
-	if err != nil {
-		log.Fatalf("Devide error %s", err)
-	}
-	fmt.Printf("Результат деления: %s .", result)
+type Person struct {
+	Name string
+	Age  int
 }
 
-func devide(n1, n2 int) (int, error) {
-	if n2 == 0 {
-		return 0, errors.New("devide by 0")
+func main() {
+	message, err := UserProfileToString("Никита", -5)
+	if err != nil {
+		log.Fatalf("Devide error %s", err)
+		//fmt.Errorf("Devide error %s", err)
 	}
-	return n1 / n2, nil
+	fmt.Println(message)
+}
+
+func UserProfileToString(name string, age int) (string, error) {
+
+	if name == "" {
+		return "", errors.New("empty name")
+	}
+	if age < 0 {
+		return "", errors.New("negative age")
+	}
+	if strings.TrimSpace(name) == "" {
+		return "", errors.New("name cannot contain only spaces")
+	}
+	return fmt.Sprintf("Имя человека: %s, возраст: %d.", name, age), nil
+}
+
+func calculate(var1, var2 float64, operation string) (float64, error) {
+	if operation == "add" {
+		return var1 + var2, nil
+	}
+	if operation == "subtract" {
+		return var1 - var2, nil
+	}
+
+	if operation == "multiply" {
+		return var1 * var2, nil
+	}
+
+	if operation == "divide" {
+		if var2 == 0 {
+			return 0, errors.New("division by zero")
+		}
+		return var1 / var2, nil
+	}
+
+	return 0, errors.New("unknown operation")
 }
 
 // Golang для профи с 39
