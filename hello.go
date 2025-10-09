@@ -7,22 +7,27 @@ import (
 	_ "strings"
 )
 
-type Person struct {
-	Name string
-	Age  int
-}
+type Day int
+
+const (
+	_ Day = iota
+	Monday
+	Tuesday
+	Wednesday
+	Thursday
+	Friday
+	Saturday
+	Sunday
+)
 
 func main() {
-	add := adder(10)
-	add(5)
-	add(15)
+	fmt.Println(isWeekend(Wednesday))
+	fmt.Println(isWeekend(Sunday))
 }
 
-func adder(n int) func(int) int {
-	sum := n
-	return func(x int) int {
-		sum += x
-		fmt.Println(sum)
-		return sum
+func isWeekend(i Day) bool {
+	if i == 6 || i == 7 {
+		return true
 	}
+	return false
 }
